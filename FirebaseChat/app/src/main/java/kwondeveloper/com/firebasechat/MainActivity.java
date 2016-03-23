@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private Firebase mFirebaseRootRef;
     private Firebase mFirebaseMessageRef;
     private ListView mListView;
-    private LinkedList<String> mMessages;
     private FirebaseListAdapter<String> mFirebaseAdapter;
     private String mUserName = "User";
     private Random mUserNameGenerator;
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         mEditText = (EditText) findViewById(R.id.edit_text);
         mButton = (Button) findViewById(R.id.submit_button);
         mListView = (ListView) findViewById(R.id.list);
-        mMessages = new LinkedList<String>();
         mToolbar = (Toolbar) findViewById(R.id.ActionBar);
         mFirebaseRootRef = new Firebase("https://dazzling-fire-7574.firebaseio.com/");
         mFirebaseMessageRef = mFirebaseRootRef.child("messages");
@@ -55,11 +53,10 @@ public class MainActivity extends AppCompatActivity {
                 this,String.class,android.R.layout.simple_list_item_1,mFirebaseMessageRef) {
             @Override
             protected void populateView(View view, String s, int i) {
-                mMessages.add(0,s);
-                mFirebaseAdapter.notifyDataSetChanged();
+                TextView textview = (TextView) findViewById(android.R.id.text1);
+                textview.setText(mUserName + ": " + s);
             }
         };
-
         mListView.setAdapter(mFirebaseAdapter);
 
         mButton.setOnClickListener(new View.OnClickListener() {
